@@ -1,0 +1,30 @@
+pkg_name="bash"
+pkg_ver="4.3.39"
+pkg_desc="Bash is an sh-compatible shell that incorporates useful features from the Korn shell (ksh) and C shell (csh)."
+pkg_rdeps="core/readline"
+pkg_bdeps=""
+pkg_arch="x86 x86_64"
+pkg_license="GPLv3"
+pkg_uri="http://www.gnu.org/s/bash"
+pkg_src=("bash::http://ftp.gnu.org/gnu/bash/bash-4.3.30.tar.gz"
+         "bash43-039::http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-039")
+pkg_hashsum=("md5::summd5" "md5::summd5")
+pkg_post_rule="cuma skrip post install/uninstall"
+
+aspkg_preapre() {
+  : # just left it empty
+}
+
+aspkg_build() {
+  : # just left it empty
+}
+
+aspkg_pre_install() {
+  :
+}
+
+aspkg_install() {
+  :
+}
+
+# vim: ft=sh:ts=4:sw=2:sts=2:syn=sh:et
