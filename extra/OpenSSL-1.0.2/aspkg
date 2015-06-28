@@ -1,0 +1,35 @@
+# maintained by korep 
+pkg_name="OpenSSL-1.0.2"
+pkg_ver="1.0.2"
+pkg_desc="The OpenSSL package contains management tools and libraries relating to cryptography. These are useful for providing cryptography functions to other packages, such as OpenSSH, email applications and 
+web browsers (for accessing HTTPS sites)."
+pkg_rdeps=""
+pkg_bdeps="extra/MIT\ Kerberos\ V5-1.13.1"
+pkg_arch="x86 x86_64"
+pkg_license="Apache-style"
+pkg_uri="https://openssl.org/"
+pkg_src=("openssl::https://openssl.org/source/openssl-1.0.2.tar.gz"
+	 "openssl102-fix::http://www.linuxfromscratch.org/patches/blfs/7.7/openssl-1.0.2-fix_parallel_build-1.patch")
+pkg_hashsum=("md5::38373013fc85c790aabf8837969c5eba" "md5::38373013fc85c790aabf8837969c5eba")
+pkg_post_rules="script untuk install/uninstall openssl"
+aspk_preapre() {
+  :
+}
+aspkg_build() {
+  : patch -Np1 -i ../openssl-1.0.2-fix_parallel_build-1.patch &&
+    ./config --prefix=/usr         \
+         --openssldir=/etc/ssl \
+         --libdir=lib          \
+         shared                \
+         zlib-dynamic &&
+    make
+}
+aspkg_pre_install() {
+  : 
+}
+aspkg_install() {
+  : make MANDIR=/usr/share/man MANSUFFIX=ssl install &&
+    install -dv -m755 /usr/share/doc/openssl-1.0.2  &&
+    cp -vfr doc/*     /usr/share/doc/openssl-1.0.2
+}
+ 

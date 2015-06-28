@@ -1,0 +1,40 @@
+# maintained by korep
+pkg_name="OpenSSH-6.7p1"
+pkg_ver="6.7p1"
+pkg_desc="The OpenSSH package contains ssh client daemon. This is useful for encrypting authentication and subsequent traffic over a network. the ssh and scp commands are
+secure implementations of telnet and rcp respectively."
+pkg_rdeps="extra/OpenSSL-1.0.2"
+pkg_bdeps=""
+pkg_arch="x86 x86_64"
+pkg_license="BSD"
+pkg_uri="http://www.openssh.com/"
+pkg_src=("openssh::http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-6.7p1.tar.gz")
+pkg_hashsum=("md5::3246aa79317b1d23cae783a3bf8275d6" "md5::3246aa79317b1d23cae783a3bf8275d6")
+pkg_post_rule="cuma skrip post install/uninstall"
+aspkg_preapre() {
+  : install -v -m700 -d /var/lib/sshd &&
+    chown   -v root:sys /var/lib/sshd &&
+    groupadd -g 50 sshd &&
+    useradd -c 'sshd PrivSep' -d /var/lib/sshd -g sshd -s /bin/false -u 50 sshd
+    # just left it if empty
+}
+
+aspkg_build() {
+  : ./configure --prefix=/usr                     \
+            --sysconfdir=/etc/ssh             \
+            --with-md5-passwords              \
+            --with-privsep-path=/var/lib/sshd &&
+    make
+}
+
+aspkg_pre_install() {
+  : # just letf it if empty
+}
+
+aspkg_install() {
+  :make install                                  &&
+   install -v -m755 contrib/ssh-copy-id /usr/bin &&
+   install -v -m644 contrib/ssh-copy-id.1 /usr/share/man/man1 &&
+   install -v -m755 -d /usr/share/doc/openssh-6.7p1           &&
+   install -v -m644 INSTALL LICENCE OVERVIEW README* /usr/share/doc/openssh-6.7p1
+}
