@@ -10,7 +10,7 @@ pkg_uri="http://links.twibright.com/user_en.html"
 pkg_src=("links::http://links.twibright.com/download/links-2.9.tar.bz2")
 pkg_hashsum=("md5::b0b1a0110d0845cc97da7f6f7c5e007c" "md5::b0b1a0110d0845cc97da7f6f7c5e007c")
 pkg_post_rule="browser text favoritku hehehehe"
-aspk_preapre() {
+aspkg_preapre() {
   :
 }
 aspkg_build() {
